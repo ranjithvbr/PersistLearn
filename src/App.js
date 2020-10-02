@@ -1,26 +1,36 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {connect} from "react-redux"
+import {inputupdatefun} from "./action/onchangeinput"
+import {persistchangefun} from "./action/persistchange"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends React.Component{
+  
+  render(){
+    console.log(this.props.inputvalue,"inputvalue")
+    alert(this.props.persisttest)
+    return (
+      <div className="App">
+        <h3 onClick={()=>this.props.inputupdatefun("Done")}>persisttest-{this.props.inputvalue}</h3>
+        <h3 onClick={()=>this.props.persistchangefun("Done")}>testhai</h3>{this.props.persisttest}
+
+        {/* <input onChange={this.props.inputupdatefun} /> */}
+        
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps=(state)=>({
+  inputvalue:state.inputvalue,
+  persisttest:state.persisttest
+})
+
+const mapDispatchToProps=()=>({
+  inputupdatefun,
+  persistchangefun
+})
+
+export default connect(mapStateToProps,mapDispatchToProps())(App);
